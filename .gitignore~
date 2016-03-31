@@ -1,0 +1,17 @@
+logs
+target
+project/target
+target/streams/$global/playCommonClassloader/$global/streams/out
+conf/evolutions/default/
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/RUNNING_PID
+/.sass-cache
+*.iml
+logs/application.log
+*.log
+nohup.out
+public/images/
