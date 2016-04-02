@@ -15,7 +15,7 @@ libraryDependencies ++= Seq(
   cache,
   javaWs,
   javaJpa,
-  "mysql" % "mysql-connector-java" % "5.1.18",
+  "org.postgresql" % "postgresql" % "9.3-1100-jdbc41",
   "com.monitorjbl" % "json-view" % "0.8"
 )
 
