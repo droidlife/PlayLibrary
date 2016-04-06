@@ -26,6 +26,9 @@ public class Student extends Model {
     @CreatedTimestamp
     public Date createdOn;
 
+    public static Finder<Integer, Student> find = new Finder<>(Student.class);
 
-
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

@@ -1,26 +1,38 @@
 package controllers;
 
 
+import Utility.Hash;
+import Utility.ResponseManager;
+import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.Student;
-import play.mvc.Controller;
+import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Results;
 
 import java.io.IOException;
 
-public class StudentController extends Controller {
+public class StudentController extends ResponseManager {
 
-    public Result addStudent() {
+    public Result regitserStudent() {
         try {
             JsonNode values = request().body().asJson();
             Student student = new ObjectMapper().readValue(values.toString(), Student.class);
+            Student checkStudent = Ebean.find(Student.class).where().eq("student_rollnumber",student.studentRollnumber)
+                    .findUnique();
+
+            if(checkStudent != null) {
+
+                return Results.ok(resultBuilder(true,"Sorry the Student Already Exists"));
+
+            }
+            student.setPassword(Hash.generateHash(student.password));
             student.save();
-            return Results.ok();
+            return Results.ok(resultBuilder(true, student));
         } catch (IOException e) {
             e.printStackTrace();
         }
-            return Results.badRequest();
+        return Results.badRequest(Json.toJson(serverError()));
     }
 }
