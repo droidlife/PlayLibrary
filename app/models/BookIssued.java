@@ -6,31 +6,25 @@ import com.avaje.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import java.util.Date;
 
 @Entity
-public class Book extends Model{
+public class BookIssued extends Model{
 
     @Id
     @GeneratedValue
     public Integer id;
 
-    @ManyToOne
+    @OneToOne
     public Student student;
 
-    @ManyToOne
+    @OneToOne
     public LibraryAdmin libraryAdmin;
 
-    public Integer ISBN;
+    @OneToOne
+    public Books books;
 
-    public String name;
-    public String author;
-    public String domain;
-
-    public boolean availability;
-
-    public boolean isIssued;
 
     public Date dateOfSubmission;
 
