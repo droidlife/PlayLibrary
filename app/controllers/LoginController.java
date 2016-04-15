@@ -51,7 +51,7 @@ public class LoginController extends ResponseManager {
             }
 
             if (LoginUtil.isValidStudentUser(student.password,checkStudent.password)) {
-                hashMap.put("result",true);
+                hashMap.put("status",true);
                 hashMap.put("sessionId", LoginUtil.createSession(checkStudent.id));
                 hashMap.put("user",student);
                 return Results.ok(Ebean.json().toJson(hashMap));
