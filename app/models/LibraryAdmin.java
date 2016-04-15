@@ -17,4 +17,7 @@ public class LibraryAdmin extends Model{
 
     public String name;
 
+    public String password;
+
+
 }

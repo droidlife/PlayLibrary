@@ -3,6 +3,7 @@ package controllers;
 
 import Utility.Hash;
 import Utility.ResponseManager;
+import Utility.StudentAuthenticator;
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,9 +11,11 @@ import models.Student;
 import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Results;
+import play.mvc.Security;
 
 import java.io.IOException;
 
+@Security.Authenticated(StudentAuthenticator.class)
 public class StudentController extends ResponseManager {
 
     public Result regitserStudent() {
@@ -35,4 +38,6 @@ public class StudentController extends ResponseManager {
         }
         return Results.badRequest(Json.toJson(serverError()));
     }
+
+
 }
