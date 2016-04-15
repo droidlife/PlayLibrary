@@ -3,6 +3,7 @@ package controllers;
 
 import Utility.LoginUtil;
 import Utility.ResponseManager;
+import Utility.StudentAuthenticator;
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,9 +11,11 @@ import models.Student;
 import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Results;
+import play.mvc.Security;
 
 import java.util.HashMap;
 
+@Security.Authenticated(StudentAuthenticator.class)
 public class LoginController extends ResponseManager {
 
     public Result logout() {
@@ -40,7 +43,7 @@ public class LoginController extends ResponseManager {
 
             JsonNode values = request().body().asJson();
             Student student = new ObjectMapper().readValue(values.toString(), Student.class);
-            Student checkStudent = Ebean.find(Student.class).where().eq("student_rollnumber",student.studentRollnumber)
+            Student checkStudent = Ebean.find(Student.class).where().eq("student_email",student.studentEmail)
                     .findUnique();
 
             if(checkStudent == null) {

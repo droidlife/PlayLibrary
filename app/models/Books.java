@@ -3,14 +3,12 @@ package models;
 import com.avaje.ebean.Model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Books extends Model{
 
     @Id
-    @GeneratedValue
     public Integer id;
 
     public Integer ISBN;
