@@ -26,7 +26,7 @@ public class LoginController extends ResponseManager {
             if (LoginUtil.clearSession(sessionId)) {
                 return Results.ok(resultBuilder(true,"Successfully Logout"));
             } else {
-                return Results.ok(resultBuilder(true,"User Already Logged out"));
+                return Results.ok(resultBuilder(false,"User Already Logged out"));
             }
 
 

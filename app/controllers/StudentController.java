@@ -27,7 +27,7 @@ public class StudentController extends ResponseManager {
 
             if(checkStudentRollNumber != null) {
 
-                return Results.ok(resultBuilder(true,"Sorry the Student Already Exists"));
+                return Results.ok(resultBuilder(false,"Sorry the Student Already Exists"));
 
             }
 
@@ -36,7 +36,7 @@ public class StudentController extends ResponseManager {
 
             if(checkStudentEmail != null) {
 
-                return Results.ok(resultBuilder(true,"Sorry the Email Already Exists"));
+                return Results.ok(resultBuilder(false,"Sorry the Email Already Exists"));
 
             }
 
