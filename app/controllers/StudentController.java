@@ -22,14 +22,24 @@ public class StudentController extends ResponseManager {
         try {
             JsonNode values = request().body().asJson();
             Student student = new ObjectMapper().readValue(values.toString(), Student.class);
-            Student checkStudent = Ebean.find(Student.class).where().eq("student_rollnumber",student.studentRollnumber)
+            Student checkStudentRollNumber = Ebean.find(Student.class).where().eq("student_rollnumber",student.studentRollnumber)
                     .findUnique();
 
-            if(checkStudent != null) {
+            if(checkStudentRollNumber != null) {
 
                 return Results.ok(resultBuilder(true,"Sorry the Student Already Exists"));
 
             }
+
+            Student checkStudentEmail = Ebean.find(Student.class).where().eq("student_email",student.studentEmail)
+                    .findUnique();
+
+            if(checkStudentEmail != null) {
+
+                return Results.ok(resultBuilder(true,"Sorry the Email Already Exists"));
+
+            }
+
             student.setPassword(Hash.generateHash(student.password));
             student.save();
             return Results.ok(resultBuilder(true, student));
