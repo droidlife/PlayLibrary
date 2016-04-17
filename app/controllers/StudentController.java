@@ -6,10 +6,7 @@ import Utility.ResponseManager;
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import models.BookIssued;
-import models.Books;
-import models.Session;
-import models.Student;
+import models.*;
 import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Results;
@@ -92,7 +89,16 @@ public class StudentController extends ResponseManager {
                 List<BookIssued> details = Ebean.find(BookIssued.class).fetch("books").where().eq("student_id", student.id).
                         findList();
 
+                List<Fine> fines = Ebean.find(Fine.class).where().conjunction().eq("student_id",student.id).
+                        eq("is_paid",false).findList();
 
+                Integer amount = 0;
+
+                for(Fine fine : fines) {
+
+                    amount += fine.days;
+                }
+                hashMap.put("fine",amount);
                 hashMap.put("status",true);
                 hashMap.put("books",details);
 
