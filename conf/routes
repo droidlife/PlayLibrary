@@ -14,5 +14,7 @@ POST         /api/books/add                controllers.BooksController.addBook()
 GET          /api/books/list               controllers.BooksController.getBooks()
 GET          /api/books/suggestions        controllers.StudentController.getSuggestionBooks(key)
 
+GET        /api/student/details            controllers.StudentController.studentDetails()
+
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                controllers.Assets.versioned(path="/public", file: Asset)
