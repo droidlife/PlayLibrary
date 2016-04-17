@@ -55,8 +55,7 @@ public class StudentController extends ResponseManager {
         try{
 
             List<Books> books = Ebean.find(Books.class).where().like("name",key+"%").findList();
-            if (books == null) {
-
+            if (books.size() == 0) {
                 return Results.ok(resultBuilder(false,books));
 
             }
