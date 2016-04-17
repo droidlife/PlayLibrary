@@ -3,19 +3,19 @@ package controllers;
 
 import Utility.Hash;
 import Utility.ResponseManager;
-import Utility.StudentAuthenticator;
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import models.Books;
 import models.Student;
 import play.libs.Json;
 import play.mvc.Result;
 import play.mvc.Results;
-import play.mvc.Security;
 
 import java.io.IOException;
+import java.util.List;
 
-@Security.Authenticated(StudentAuthenticator.class)
+//@Security.Authenticated(StudentAuthenticator.class)
 public class StudentController extends ResponseManager {
 
     public Result regitserStudent() {
@@ -27,7 +27,7 @@ public class StudentController extends ResponseManager {
 
             if(checkStudentRollNumber != null) {
 
-                return Results.ok(resultBuilder(false,"Sorry the Student Already Exists"));
+                return Results.ok(resultBuilder(false,"Sorry the Student RollNumber Already Exists"));
 
             }
 
@@ -49,5 +49,17 @@ public class StudentController extends ResponseManager {
         return Results.badRequest(Json.toJson(serverError()));
     }
 
+
+    public Result getSuggestionBooks(String key) {
+
+        try{
+
+            List<Books> books = Ebean.find(Books.class).where().like("name",key+"%").findList();
+            return Results.ok(resultBuilder(true,books));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+            return Results.ok(Json.toJson(serverError()));
+    }
 
 }
