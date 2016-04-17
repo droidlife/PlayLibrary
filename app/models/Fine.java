@@ -20,4 +20,5 @@ public class Fine extends Model {
     public boolean isPaid;
 
     public Integer days;
+
 }
