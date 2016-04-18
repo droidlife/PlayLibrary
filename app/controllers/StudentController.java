@@ -102,7 +102,7 @@ public class StudentController extends ResponseManager {
                 }
                 hashMap.put("fine", amount);
                 hashMap.put("status", true);
-                hashMap.put("books", details);
+                hashMap.put("bookArray", details);
 
                 return Results.ok(Ebean.json().toJson(hashMap));
             } else {

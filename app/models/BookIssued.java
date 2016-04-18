@@ -4,10 +4,7 @@ package models;
 import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.CreatedTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -23,7 +20,7 @@ public class BookIssued extends Model{
     @OneToOne
     public LibraryAdmin libraryAdmin;
 
-    @OneToOne
+    @ManyToMany
     public Books books;
 
 
