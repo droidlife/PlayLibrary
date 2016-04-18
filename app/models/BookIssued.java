@@ -14,13 +14,13 @@ public class BookIssued extends Model{
     @GeneratedValue
     public Integer id;
 
-    @ManyToMany
+    @ManyToOne
     public Student student;
 
     @OneToOne
     public LibraryAdmin libraryAdmin;
 
-    @ManyToMany
+    @ManyToOne
     public Books books;
 
 
