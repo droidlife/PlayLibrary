@@ -2,6 +2,7 @@ package models;
 
 
 import com.avaje.ebean.Model;
+import com.avaje.ebean.annotation.CreatedTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +29,7 @@ public class BookIssued extends Model{
 
     public Date dateOfSubmission;
 
+    @CreatedTimestamp
     public Date dateOfIssue;
 
 

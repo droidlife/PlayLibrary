@@ -12,6 +12,8 @@ import play.mvc.Result;
 import play.mvc.Results;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -68,7 +70,7 @@ public class StudentController extends ResponseManager {
 
     public Result studentDetails() {
 
-        HashMap<String,Object> hashMap = new HashMap<>();
+        HashMap<String, Object> hashMap = new HashMap<>();
 
         try {
             String token = request().getHeader("sessionId");
@@ -89,18 +91,18 @@ public class StudentController extends ResponseManager {
                 List<BookIssued> details = Ebean.find(BookIssued.class).fetch("books").where().eq("student_id", student.id).
                         findList();
 
-                List<Fine> fines = Ebean.find(Fine.class).where().conjunction().eq("student_id",student.id).
-                        eq("is_paid",false).findList();
+                List<Fine> fines = Ebean.find(Fine.class).where().conjunction().eq("student_id", student.id).
+                        eq("is_paid", false).findList();
 
                 Integer amount = 0;
 
-                for(Fine fine : fines) {
+                for (Fine fine : fines) {
 
                     amount += fine.days;
                 }
-                hashMap.put("fine",amount);
-                hashMap.put("status",true);
-                hashMap.put("books",details);
+                hashMap.put("fine", amount);
+                hashMap.put("status", true);
+                hashMap.put("books", details);
 
                 return Results.ok(Ebean.json().toJson(hashMap));
             } else {
@@ -113,6 +115,53 @@ public class StudentController extends ResponseManager {
             e.printStackTrace();
 
         }
+        return Results.badRequest(Json.toJson(serverError()));
+    }
+
+    public Result issueBook() {
+
+        try {
+
+            String token = request().getHeader("sessionId");
+            if (token.length() == 0) {
+                return Results.unauthorized(resultBuilder(false, "Please provide the token"));
+            }
+
+            Session user = Ebean.find(Session.class).where().conjunction().eq("session_id", token).findUnique();
+
+            if (user == null) {
+                return Results.unauthorized(resultBuilder(false, "Please login to continue"));
+            }
+
+            Student student = Ebean.find(Student.class).where().idEq(user.userId).findUnique();
+
+            if (student != null) {
+
+                JsonNode jsonNode = request().body().asJson().findValue("bookId");
+                Integer id = jsonNode.asInt();
+
+                Books book = Ebean.find(Books.class).where().idEq(id).findUnique();
+
+                BookIssued bookIssued = new BookIssued();
+                bookIssued.books = book;
+                bookIssued.student = student;
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date());
+                calendar.add(Calendar.DATE, 14);
+
+                bookIssued.dateOfSubmission = calendar.getTime();
+
+                bookIssued.save();
+            } else {
+                return Results.unauthorized(resultBuilder(false, "Provided Credentials are wrong." + "\n"
+                        + "Please Login again to continue"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return Results.badRequest(Json.toJson(serverError()));
     }
 }

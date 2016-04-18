@@ -3,18 +3,18 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET           /                            controllers.HomeController.index
+GET           /                             controllers.HomeController.index
 
-POST          /api/student/register        controllers.StudentController.regitserStudent()
+POST          /api/student/register         controllers.StudentController.regitserStudent()
 
-DELETE        /api/student/logout          controllers.LoginController.logout()
-POST          /api/student/login           controllers.LoginController.studentLogin()
+DELETE        /api/student/logout           controllers.LoginController.logout()
+POST          /api/student/login            controllers.LoginController.studentLogin()
 
-POST         /api/books/add                controllers.BooksController.addBook()
-GET          /api/books/list               controllers.BooksController.getBooks()
-GET          /api/books/suggestions        controllers.StudentController.getSuggestionBooks(key)
+POST          /api/books/add                controllers.BooksController.addBook()
+GET           /api/books/list               controllers.BooksController.getBooks()
+GET           /api/books/suggestions        controllers.StudentController.getSuggestionBooks(key)
 
-GET        /api/student/details            controllers.StudentController.studentDetails()
-
+GET           /api/student/details          controllers.StudentController.studentDetails()
+POST          /api/student/issue            controllers.StudentController.issueBook()
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file                controllers.Assets.versioned(path="/public", file: Asset)
+GET           /assets/*file                 controllers.Assets.versioned(path="/public", file: Asset)
