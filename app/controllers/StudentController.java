@@ -87,10 +87,10 @@ public class StudentController extends ResponseManager {
             Student student = Ebean.find(Student.class).where().idEq(user.userId).findUnique();
 
             if (student != null) {
-
+                System.out.println("here");
                 List<BookIssued> details = Ebean.find(BookIssued.class).fetch("books").where().eq("student_id", student.id).
                         findList();
-
+                System.out.println("here");
                 List<Fine> fines = Ebean.find(Fine.class).where().conjunction().eq("student_id", student.id).
                         eq("is_paid", false).findList();
 
@@ -139,9 +139,9 @@ public class StudentController extends ResponseManager {
 
                 JsonNode jsonNode = request().body().asJson().findValue("bookId");
                 Integer id = jsonNode.asInt();
-
+                System.out.println("here");
                 Books book = Ebean.find(Books.class).where().idEq(id).findUnique();
-
+                System.out.println("here");
                 BookIssued bookIssued = new BookIssued();
                 bookIssued.books = book;
                 bookIssued.student = student;
