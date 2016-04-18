@@ -88,7 +88,7 @@ public class StudentController extends ResponseManager {
 
             if (student != null) {
                 System.out.println("here");
-                List<BookIssued> details = Ebean.find(BookIssued.class).fetch("books").where().eq("student_id", student.id).
+                List<BookIssued> details = Ebean.find(BookIssued.class).select("books").fetch("books").where().eq("student_id", student.id).
                         findList();
                 System.out.println("here");
                 List<Fine> fines = Ebean.find(Fine.class).where().conjunction().eq("student_id", student.id).
@@ -153,6 +153,9 @@ public class StudentController extends ResponseManager {
                 bookIssued.dateOfSubmission = calendar.getTime();
 
                 bookIssued.save();
+
+                return Results.ok(resultBuilder(true,"Book has been added"));
+
             } else {
                 return Results.unauthorized(resultBuilder(false, "Provided Credentials are wrong." + "\n"
                         + "Please Login again to continue"));
