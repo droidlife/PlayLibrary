@@ -14,7 +14,7 @@ public class BookIssued extends Model{
     @GeneratedValue
     public Integer id;
 
-    @OneToOne
+    @ManyToMany
     public Student student;
 
     @OneToOne
